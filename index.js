@@ -26,6 +26,16 @@ app.get('/', (req, res) => {
   res.send("Hello, World! Welcome to the Moments in Time API");
 })
 
+//Change Express’ App.js file to call React build assets
+const path = require('path');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+}
+
 // port
 const PORT = process.env.PORT|| 5000;
 
